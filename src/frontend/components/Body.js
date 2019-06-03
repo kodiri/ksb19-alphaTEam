@@ -12,35 +12,30 @@ class Body extends React.Component {
   async componentDidMount() {
     const response = await fetch('/api/properties');
     const data = await response.json();
-    await this.setState({ propertyList: data, isLoading: false });
-    this.setState({originalProperties: this.state.propertyList.length});
+    await this.setState({propertyList: data, isLoading: false});
   }
 
-  searchProperty(input){
+  searchProperty(input) {
+    const inputToLowerCase = input.toLowerCase();
     return this.state.propertyList.filter(home => (
-                home.id.includes(input) ||
-                home.type.includes(input) ||
-                home.address.includes(input) ||
-                home.description.includes(input)
-              )
-       )
+      home.id.toLowerCase().includes(inputToLowerCase)
+        || home.type.toLowerCase().includes(inputToLowerCase)
+        || home.address.toLowerCase().includes(inputToLowerCase)
+        || home.description.toLowerCase().includes(inputToLowerCase)
+    ));
   }
+
   inputHandler(e) {
-    this.setState({originalProperties: this.state.propertyList.length});
-    if (e.target.value.length > 3){
-      let res = this.searchProperty(e.target.value);
-    if (res.length > 0){
-      this.setState({propertyList: res});
-    }
+    this.setState({ originalProperties: this.state.propertyList.length });
+    if (e.target.value.length >= 3) {
+      const res = this.searchProperty(e.target.value);
+      if (res.length > 0) {
+        this.setState({ propertyList: res });
+      }
     } else {
       this.componentDidMount();
-
-      if (this.state.originalProperties !== this.state.propertyList.length){
-       this.componentDidMount();
-        // console.log(this.state.propertyList);
-      }
-    } 
-}
+    }
+  }
 
   render() {
     if (this.state.isLoading) {
@@ -50,8 +45,8 @@ class Body extends React.Component {
     }
     return (
       <div className="body-container">
-        <input type="text" placeholder="Search properties" onChange={(e) => this.inputHandler(e)} />
-      {/* <label>Property</label> */}
+        <input type="text" placeholder="Search properties" onChange={e => this.inputHandler(e)} />
+        {/* <label>Property</label> */}
         <h1>Featured Properties</h1>
         <div className="body-properties">
           {this.state.propertyList.map(property => (
