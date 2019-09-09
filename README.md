@@ -1,7 +1,7 @@
 # Welcome to the Alpha Properties Project
 
 ## This is a mock real estate agent website specialising around prime properties in central London.
-## It's built with <strong>React.js</strong> && <strong>Node.js</strong>.
+## It's built with <strong>React.js</strong> & <strong>Node.js</strong>.
 
 ### Live demo links below &#x21e9;
 
